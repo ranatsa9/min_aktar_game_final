@@ -366,7 +366,7 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
 [data-testid="stMain"] .block-container {
     direction: rtl;
     max-width: 880px;
-    padding-top: 1.5rem;
+    padding-top: 4.25rem;
     padding-bottom: 4rem;
 }
 
@@ -376,15 +376,53 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
     border-right: 1px solid var(--line);
 }
 
-/* Hide Streamlit's collapse control when its Material icon font fails to load. */
+/* Reliable open/close controls that do not depend on Material icon fonts. */
 [data-testid="stSidebarCollapseButton"],
 [data-testid="stSidebarCollapsedControl"] {
+    display: block !important;
+    z-index: 1000000 !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button,
+[data-testid="stSidebarCollapsedControl"] button {
+    width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    border-radius: 12px !important;
+    background: #211a2f !important;
+    border: 1px solid #514263 !important;
+    color: transparent !important;
+    position: relative;
+}
+
+[data-testid="stSidebarCollapseButton"] button span,
+[data-testid="stSidebarCollapsedControl"] button span {
     display: none !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button::after {
+    content: "×";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: white;
+    font: 800 1.65rem/1 Arial, sans-serif;
+}
+
+[data-testid="stSidebarCollapsedControl"] button::after {
+    content: "☰";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: white;
+    font: 800 1.25rem/1 Arial, sans-serif;
 }
 
 /* Keep Arabic letters and controls comfortably away from sidebar borders. */
 [data-testid="stSidebarContent"] {
-    padding: 1.2rem 1.15rem 2rem !important;
+    padding: 4.4rem 1.25rem 2rem !important;
 }
 
 [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
@@ -441,6 +479,50 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
     overflow: hidden;
 }
 
+.rules-drawer {
+    direction: rtl;
+    margin: .8rem 0 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(23,21,34,.78);
+    overflow: hidden;
+}
+
+.rules-drawer summary {
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 1.15rem 1rem 3.25rem;
+    font-weight: 800;
+    user-select: none;
+}
+
+.rules-drawer summary::-webkit-details-marker { display: none; }
+.rules-drawer summary::after {
+    content: "+";
+    position: absolute;
+    left: 1.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.75rem;
+    height: 1.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    color: #e9d5ff;
+    background: #33264a;
+    font: 800 1.2rem/1 Arial, sans-serif;
+}
+
+.rules-drawer[open] summary::after { content: "−"; }
+.rules-content {
+    border-top: 1px solid var(--line);
+    padding: 1rem 1.35rem 1.25rem;
+}
+.rules-content h3 { margin: 0 0 .8rem; }
+.rules-content ol { margin: 0; padding: 0 1.8rem 0 0; }
+.rules-content li { padding: .22rem .35rem .22rem 0; line-height: 1.65; }
+
 [data-testid="stForm"] {
     background: rgba(23,21,34,.82);
     border: 1px solid var(--line);
@@ -469,8 +551,23 @@ div[data-baseweb="select"] > div {
 }
 
 @media (max-width: 640px) {
-    [data-testid="stMain"] .block-container { padding: 1rem .8rem 3rem; }
-    .question { padding: 1.5rem .9rem; }
+    [data-testid="stMain"] .block-container {
+        width: 100%;
+        padding: 4rem .85rem 3rem;
+    }
+    [data-testid="stSidebar"] { width: min(88vw, 320px) !important; }
+    [data-testid="stSidebarContent"] { padding: 4.5rem 1rem 2rem !important; }
+    .main-title { font-size: 2.35rem; padding-top: .35rem; }
+    .subtitle { font-size: .98rem; line-height: 1.7; padding-inline: .4rem; }
+    .question { font-size: 1.45rem; padding: 1.4rem .85rem; border-radius: 20px; }
+    .waiting { padding: 1.35rem .8rem; border-radius: 19px; }
+    .rules-drawer summary { padding: .9rem .9rem .9rem 3rem; }
+    .rules-content { padding: .9rem .8rem 1rem; }
+    .rules-content ol { padding-right: 1.55rem; }
+    .rules-content li { padding-right: .2rem; font-size: .94rem; }
+    .stButton button, [data-testid="stFormSubmitButton"] button { min-height: 52px; width: 100%; }
+    input, textarea, select { font-size: 16px !important; }
+    [data-testid="column"] { min-width: 0 !important; }
 }
 
 </style>
@@ -498,26 +595,27 @@ st.markdown(
 # RULES
 # =========================================================
 
-with st.expander(
-    "📜 قوانين اللعبة",
-    expanded=False
-):
-
-    st.markdown("""
-### 🎮 كيف نلعب؟
-
-1. 👤 كل لاعب يكتب اسمه وينضم للعبة.
-2. ⏳ ننتظر حتى تكتمل المجموعة.
-3. 🚀 المضيفة هي اللي تبدأ اللعبة.
-4. 🗳️ لكل لاعب تصويت واحد فقط في كل سؤال.
-5. 🚫 ممنوع التصويت لنفسك.
-6. 🔒 بعد إرسال التصويت ما تقدر تغيره.
-7. 👀 التصويت يظهر للجميع مباشرة.
-8. 🏆 أكثر شخص يحصل على الأصوات في كل سؤال يفوز بالجولة.
-9. 📊 في النهاية يتم جمع أصوات جميع الأسئلة.
-10. 👑 أكثر شخص جمع أصوات هو الفائز النهائي.
-11. 🎁 الفائز النهائي له مفاجأة خاصة 😉
-    """)
+st.markdown("""
+<details class="rules-drawer">
+  <summary>📜 قوانين اللعبة</summary>
+  <div class="rules-content">
+    <h3>🎮 كيف نلعب؟</h3>
+    <ol>
+      <li>👤 كل لاعب يكتب اسمه وينضم للعبة.</li>
+      <li>⏳ ننتظر حتى تكتمل المجموعة.</li>
+      <li>🚀 المضيفة هي اللي تبدأ اللعبة.</li>
+      <li>🗳️ لكل لاعب تصويت واحد فقط في كل سؤال.</li>
+      <li>🚫 ممنوع التصويت لنفسك.</li>
+      <li>🔒 بعد إرسال التصويت ما تقدر تغيره.</li>
+      <li>👀 التصويت يظهر للجميع مباشرة.</li>
+      <li>🏆 أكثر شخص يحصل على الأصوات في كل سؤال يفوز بالجولة.</li>
+      <li>📊 في النهاية يتم جمع أصوات جميع الأسئلة.</li>
+      <li>👑 أكثر شخص جمع أصوات هو الفائز النهائي.</li>
+      <li>🎁 الفائز النهائي له مفاجأة خاصة 😉</li>
+    </ol>
+  </div>
+</details>
+""", unsafe_allow_html=True)
 
 
 st.divider()
