@@ -376,6 +376,21 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
     border-right: 1px solid var(--line);
 }
 
+/* Hide Streamlit's collapse control when its Material icon font fails to load. */
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapsedControl"] {
+    display: none !important;
+}
+
+/* Keep Arabic letters and controls comfortably away from sidebar borders. */
+[data-testid="stSidebarContent"] {
+    padding: 1.2rem 1.15rem 2rem !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+    gap: .85rem;
+}
+
 .main-title {
     font-size: clamp(2.7rem, 8vw, 4.4rem);
     line-height: 1.15;
