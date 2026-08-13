@@ -201,10 +201,6 @@ def has_voted(question_index, voter):
 
 
 def save_vote(question_index, voter, candidate):
-
-    if voter == candidate:
-        return False
-
     con = get_db()
 
     try:
@@ -605,7 +601,7 @@ st.markdown("""
       <li>⏳ ننتظر حتى تكتمل المجموعة.</li>
       <li>🚀 المضيفة هي اللي تبدأ اللعبة.</li>
       <li>🗳️ لكل لاعب تصويت واحد فقط في كل سؤال.</li>
-      <li>🚫 ممنوع التصويت لنفسك.</li>
+      <li>🙋 تقدر تصوّت لأي شخص، حتى لنفسك.</li>
       <li>🔒 بعد إرسال التصويت ما تقدر تغيره.</li>
       <li>👀 التصويت يظهر للجميع مباشرة.</li>
       <li>🏆 أكثر شخص يحصل على الأصوات في كل سؤال يفوز بالجولة.</li>
@@ -876,8 +872,7 @@ if not game_started:
 
             player_name = st.text_input(
                 "👤 اسمك",
-                placeholder="مثال: سارة",
-                max_chars=30
+                placeholder="مثال: سارة"
             )
 
 
@@ -1221,12 +1216,8 @@ font-size:1rem;
 
         else:
 
-            # Don't show yourself
-            options = [
-                player
-                for player in players
-                if player != name
-            ]
+            # Everyone appears in the list, including the current player.
+            options = players
 
 
             if options:
