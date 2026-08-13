@@ -144,11 +144,11 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
 :root { --purple:#8b5cf6; --pink:#f472b6; --cyan:#22d3ee; --ink:#f8fafc; --panel:#171525; }
 html, body, [class*="st-"] { font-family:'Tajawal',sans-serif; }
-.stApp { direction:rtl; background:
+.stApp { direction:ltr; background:
  radial-gradient(circle at 88% 4%,rgba(244,114,182,.18),transparent 25rem),
  radial-gradient(circle at 8% 30%,rgba(34,211,238,.13),transparent 23rem),
  linear-gradient(150deg,#090812 0%,#11101d 48%,#171126 100%); color:var(--ink); }
-.block-container { max-width:880px; padding-top:1.5rem; padding-bottom:4rem; }
+.block-container { direction:rtl; max-width:880px; padding-top:1.5rem; padding-bottom:4rem; }
 .hero { text-align:center; padding:1.1rem .5rem 1.4rem; position:relative; }
 .hero:before { content:'✨'; position:absolute; right:12%; top:8%; font-size:1.8rem; transform:rotate(12deg); }
 .hero:after { content:'🎉'; position:absolute; left:12%; bottom:18%; font-size:1.7rem; transform:rotate(-12deg); }
