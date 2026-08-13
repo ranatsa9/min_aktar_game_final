@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 from pathlib import Path
+from streamlit_autorefresh import st_autorefresh
 
 # =========================================================
 # DATABASE
@@ -318,6 +319,35 @@ def reset_game():
     # Clear current player session
     if "player_name" in st.session_state:
         del st.session_state["player_name"]
+
+    if "player" in st.query_params:
+        del st.query_params["player"]
+
+
+def remember_player(name):
+    """Keep a player's identity across Streamlit sessions/page refreshes."""
+    st.session_state["player_name"] = name
+    st.query_params["player"] = name
+
+
+def restore_player(players):
+    """Restore a player from the URL only if they still belong to this game."""
+    current_name = st.session_state.get("player_name")
+
+    if current_name in players:
+        return current_name
+
+    saved_name = st.query_params.get("player")
+
+    for player in players:
+        if saved_name and player.casefold() == saved_name.casefold():
+            remember_player(player)
+            return player
+
+    if current_name:
+        del st.session_state["player_name"]
+
+    return None
 
 
 # =========================================================
@@ -670,6 +700,13 @@ voting_open = bool(
 
 players = get_players()
 
+# Rerun the full script so every browser notices host actions, including while
+# it is stopped on the waiting-room screen. Session state and widget values are
+# retained across these automatic reruns.
+st_autorefresh(interval=2000, key="game_state_refresh")
+
+restore_player(players)
+
 
 # =========================================================
 # HOST PANEL
@@ -899,10 +936,7 @@ if not game_started:
 
 
                 if success:
-
-                    st.session_state[
-                        "player_name"
-                    ] = player_name.strip()
+                    remember_player(player_name.strip())
 
                     st.success(
                         "🎉 تم تسجيلك!"
@@ -1170,9 +1204,26 @@ if not admin:
 
     if not name:
 
-        st.error(
-            "لازم تسجلين دخولك أولًا."
+        st.warning(
+            "انتهت جلسة المتصفح. اختاري اسمك للرجوع إلى اللعبة."
         )
+
+        if players:
+            returning_player = st.selectbox(
+                "👤 اسمك المسجل",
+                players,
+                key="returning_player"
+            )
+
+            if st.button(
+                "↩️ رجوع للعبة",
+                use_container_width=True
+            ):
+                remember_player(returning_player)
+                st.rerun()
+
+        else:
+            st.error("ما فيه لاعبين مسجلين في هذه اللعبة.")
 
         st.stop()
 
@@ -1362,22 +1413,3 @@ else:
     st.info(
         "بانتظار أول تصويت..."
     )
-
-
-# =========================================================
-# AUTO REFRESH
-# =========================================================
-
-try:
-
-    @st.fragment(run_every="2s")
-    def refresh_game():
-
-        st.empty()
-
-
-    refresh_game()
-
-except Exception:
-
-    pass
