@@ -142,40 +142,42 @@ st.set_page_config(page_title="مين أكثر؟", page_icon="🏆", layout="cen
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
-:root { --purple:#6c3ce0; --pink:#ec4899; --ink:#17132b; }
+:root { --purple:#8b5cf6; --pink:#f472b6; --cyan:#22d3ee; --ink:#f8fafc; --panel:#171525; }
 html, body, [class*="st-"] { font-family:'Tajawal',sans-serif; }
 .stApp { direction:rtl; background:
- radial-gradient(circle at 88% 4%,rgba(236,72,153,.18),transparent 24rem),
- radial-gradient(circle at 8% 25%,rgba(124,58,237,.18),transparent 22rem),
- linear-gradient(160deg,#fff 0%,#faf7ff 48%,#fff7fb 100%); color:var(--ink); }
+ radial-gradient(circle at 88% 4%,rgba(244,114,182,.18),transparent 25rem),
+ radial-gradient(circle at 8% 30%,rgba(34,211,238,.13),transparent 23rem),
+ linear-gradient(150deg,#090812 0%,#11101d 48%,#171126 100%); color:var(--ink); }
 .block-container { max-width:880px; padding-top:1.5rem; padding-bottom:4rem; }
 .hero { text-align:center; padding:1.1rem .5rem 1.4rem; position:relative; }
 .hero:before { content:'✨'; position:absolute; right:12%; top:8%; font-size:1.8rem; transform:rotate(12deg); }
 .hero:after { content:'🎉'; position:absolute; left:12%; bottom:18%; font-size:1.7rem; transform:rotate(-12deg); }
 .hero h1 { font-size:clamp(2.4rem,8vw,4.3rem); margin:0; font-weight:900;
  background:linear-gradient(120deg,var(--purple),var(--pink)); -webkit-background-clip:text; color:transparent; }
-.hero p { color:#655f78; font-size:1.08rem; margin:.25rem 0 0; }
+.hero p { color:#c4b5d9; font-size:1.08rem; margin:.25rem 0 0; }
 .question-card { direction:rtl; text-align:center; color:white; border-radius:28px; padding:2.2rem 1.2rem;
  background:linear-gradient(135deg,#5b21b6,#8b5cf6 48%,#ec4899); box-shadow:0 18px 45px rgba(109,40,217,.28); margin:1rem 0; border:1px solid rgba(255,255,255,.25); }
 .question-card small { opacity:.82; font-weight:700; }
 .question-card h2 { font-size:clamp(1.55rem,5vw,2.25rem); margin:.65rem 0 0; line-height:1.55; }
-.waiting { text-align:center; background:rgba(255,255,255,.82); backdrop-filter:blur(12px); border:1px solid #e9ddff; border-radius:26px; padding:2rem; box-shadow:0 14px 34px rgba(76,29,149,.10); }
-.pill { display:inline-block; padding:.3rem .8rem; border-radius:99px; background:#ede9fe; color:#5b21b6; font-weight:800; }
+.waiting { text-align:center; background:rgba(23,21,37,.88); backdrop-filter:blur(12px); border:1px solid #3b3156; border-radius:26px; padding:2rem; box-shadow:0 14px 34px rgba(0,0,0,.28); }
+.pill { display:inline-block; padding:.3rem .8rem; border-radius:99px; background:#33245a; color:#ddd6fe; font-weight:800; }
 .section-title { text-align:center; margin:1.5rem 0 .2rem; font-size:1.5rem; font-weight:900; }
-.section-hint { text-align:center; color:#746b86; margin-bottom:1rem; }
+.section-hint { text-align:center; color:#aaa0bd; margin-bottom:1rem; }
 .roster { display:flex; flex-wrap:wrap; gap:.55rem; justify-content:center; margin:1.1rem 0; }
-.roster span { background:white; border:1px solid #eadfff; box-shadow:0 5px 14px rgba(91,33,182,.08); border-radius:99px; padding:.5rem .9rem; font-weight:800; }
+.roster span { background:#1d1a2c; border:1px solid #493b67; box-shadow:0 5px 14px rgba(0,0,0,.2); border-radius:99px; padding:.5rem .9rem; font-weight:800; }
 .vote-note { text-align:center; padding:.8rem; border-radius:14px; background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; margin:.8rem 0; }
-.result-row { background:white; border:1px solid #eee9f8; border-radius:14px; padding:.65rem .85rem; margin:.45rem 0; }
-.result-bar { height:9px; background:linear-gradient(90deg,#ec4899,#7c3aed); border-radius:9px; margin-top:.4rem; }
+.result-row { background:#191725; border:1px solid #403651; border-radius:14px; padding:.65rem .85rem; margin:.45rem 0; }
+.result-bar { height:9px; background:linear-gradient(90deg,#22d3ee,#8b5cf6,#f472b6); border-radius:9px; margin-top:.4rem; }
 .winner { text-align:center; border-radius:28px; padding:2rem 1rem; color:white; background:linear-gradient(135deg,#f59e0b,#ec4899,#7c3aed); }
 .winner h1 { font-size:clamp(2.5rem,9vw,4.5rem); margin:.35rem; }
-div[data-testid="stSidebar"] { direction:rtl; background:linear-gradient(180deg,#2e1065,#581c87); }
+div[data-testid="stSidebar"] { direction:rtl; background:linear-gradient(180deg,#11101d,#211537); border-left:1px solid #382c4d; }
 div[data-testid="stSidebar"] * { color:white; }
 div[data-testid="stSidebar"] div[role="radiogroup"] label { background:rgba(255,255,255,.08); border-radius:12px; padding:.35rem .55rem; }
 .stButton button { border-radius:14px; font-weight:800; min-height:48px; transition:all .18s ease; }
 .stButton button:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(109,40,217,.18); }
 div[data-testid="stForm"], div[data-testid="stVerticalBlockBorderWrapper"] { border-radius:22px !important; }
+div[data-baseweb="input"] > div, div[data-baseweb="select"] > div { background:#191725 !important; border-color:#4b3d65 !important; }
+div[data-testid="stExpander"], div[data-testid="stForm"] { background:rgba(25,23,37,.76); border-color:#413653 !important; }
 @media(max-width:640px){.block-container{padding:1rem .8rem 4rem}.question-card{padding:1.5rem .9rem}}
 </style>
 <div class="hero"><h1>🏆 مين أكثر؟</h1><p>اختاروا الشخص اللي تشوفون إن السؤال ينطبق عليه</p></div>
@@ -333,38 +335,30 @@ def live_game():
     if not admin_ok:
         name = st.session_state.get("player_name")
         if not name or name not in roster:
-            st.info("اللعبة بدأت، لكن تقدر تنضم الآن وتلحق الجولة 🎉")
-            with st.form(f"late_join_{q}"):
-                late_name = st.text_input("اسمك", placeholder="اكتب اسمك هنا", max_chars=30)
-                late_submit = st.form_submit_button("دخول اللعبة", type="primary", use_container_width=True)
-            if late_submit:
-                ok, message = add_player(late_name)
-                if ok:
-                    st.session_state.player_name = " ".join(late_name.strip().split())
-                    st.toast("دخلت اللعبة!", icon="🎮")
-                    st.rerun()
-                else:
-                    st.error(message)
-            return
+            st.error("بدأت اللعبة بالفعل. اطلب من المضيفة تصفير اللعبة لتسجيل لاعب جديد."); return
         already = any(voter == name for voter, _ in vote_details(q))
         if game["voting_open"] and not already:
             options = [p for p in roster if p != name]
             if not options:
                 st.markdown('<div class="vote-note">👋 أنت اللاعب الوحيد حاليًا. يحتاج شخص آخر أن ينضم حتى يظهر لك خيار للتصويت.</div>', unsafe_allow_html=True)
             else:
-                st.markdown('<div class="section-title">🎯 اختار مين ينطبق عليه السؤال</div><div class="section-hint">اضغط على الاسم لتثبيت صوتك — اسمك مستبعد تلقائيًا</div>', unsafe_allow_html=True)
-                cols = st.columns(2 if len(options) > 1 else 1)
-                for index, candidate in enumerate(options):
-                    icon = ["😎", "🔥", "⭐", "🎭", "🚀", "💫"][sum(map(ord, candidate)) % 6]
-                    with cols[index % len(cols)]:
-                        with st.container(border=True):
-                            st.markdown(f"<div style='text-align:center;font-size:2rem'>{icon}</div><div style='text-align:center;font-size:1.15rem;font-weight:900;margin:.2rem'>{html.escape(candidate)}</div>", unsafe_allow_html=True)
-                            if st.button(f"اختيار {candidate}", key=f"pick_{q}_{candidate}", use_container_width=True, type="primary"):
-                                if vote(q, name, candidate):
-                                    st.toast(f"صوّت لـ {candidate}!", icon="✅")
-                                    st.rerun()
-                                else:
-                                    st.error("تم تسجيل صوتك مسبقًا.")
+                st.markdown('<div class="section-title">🎯 اختار مين ينطبق عليه السؤال</div><div class="section-hint">اسمك مستبعد تلقائيًا من القائمة</div>', unsafe_allow_html=True)
+                with st.form(f"vote_{q}"):
+                    candidate = st.selectbox(
+                        "🗳️ اختر شخصًا واحدًا", options, index=None,
+                        placeholder="اضغط هنا واختر اسمًا…",
+                    )
+                    submitted = st.form_submit_button(
+                        "🔥 تثبيت التصويت", type="primary", use_container_width=True,
+                    )
+                if submitted:
+                    if candidate and vote(q, name, candidate):
+                        st.toast(f"تم التصويت لـ {candidate}!", icon="✅")
+                        st.rerun()
+                    elif not candidate:
+                        st.error("اختر اسمًا أولًا.")
+                    else:
+                        st.error("تم تسجيل صوتك مسبقًا.")
         elif already:
             st.success("✅ تم تسجيل تصويتك — انتظر البقية.")
         else:
