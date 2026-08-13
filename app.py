@@ -377,6 +377,8 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
 [data-testid="stSidebarCollapsedControl"] {
     display: block !important;
     z-index: 1000000 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
 }
 
 [data-testid="stSidebarCollapseButton"] button,
@@ -388,12 +390,27 @@ html, body, [class*="st-"] { font-family: "Tajawal", sans-serif; }
     background: #211a2f !important;
     border: 1px solid #514263 !important;
     color: transparent !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
     position: relative;
 }
 
 [data-testid="stSidebarCollapseButton"] button span,
-[data-testid="stSidebarCollapsedControl"] button span {
+[data-testid="stSidebarCollapsedControl"] button span,
+[data-testid="stSidebarCollapseButton"] button p,
+[data-testid="stSidebarCollapsedControl"] button p,
+[data-testid="stSidebarCollapseButton"] button i,
+[data-testid="stSidebarCollapsedControl"] button i {
     display: none !important;
+    font-size: 0 !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button *,
+[data-testid="stSidebarCollapsedControl"] button * {
+    font-size: 0 !important;
+    color: transparent !important;
+    width: 0 !important;
+    overflow: hidden !important;
 }
 
 [data-testid="stSidebarCollapseButton"] button::after {
@@ -607,7 +624,6 @@ st.markdown("""
       <li>🏆 أكثر شخص يحصل على الأصوات في كل سؤال يفوز بالجولة.</li>
       <li>📊 في النهاية يتم جمع أصوات جميع الأسئلة.</li>
       <li>👑 أكثر شخص جمع أصوات هو الفائز النهائي.</li>
-      <li>🎁 الفائز النهائي له مفاجأة خاصة 😉</li>
     </ol>
   </div>
 </details>
@@ -847,10 +863,6 @@ if not game_started:
 <div class="waiting">
 
 <h2>⏳ بانتظار المضيفة تبدأ اللعبة...</h2>
-
-<p>
-لا تطلعين من الصفحة ❤️
-</p>
 
 </div>
 """,
